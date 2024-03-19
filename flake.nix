@@ -41,10 +41,10 @@
             cp -r ${inputs.sdk}/{cmake,sdk_*} $out
 
             for src in $srcs; do
-                cp --no-preserve=mode -r $src/* $out
+                arch=$(basename $(find $src -maxdepth 1 -name "*zephyr*"))
+                mkdir -p $out/$arch
+                cp -r $src/* $out/$arch
             done
-
-            chmod +x $out/bin/*
 
             runHook postInstall
           '';
@@ -56,6 +56,7 @@
                 zephyr-sdk
                 cmake
                 python311Packages.west
+                ninja
             ];
             shellHook = ''
             export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
