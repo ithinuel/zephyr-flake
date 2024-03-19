@@ -23,9 +23,40 @@
         pkgs = nixpkgs.legacyPackages.${system};
         version = "0.16.5-1";
         # build hosttools (aka sdk?)
-        hosttools = (import ./hosttools.nix) pkgs inputs.sdk;
+        hosttools = pkgs.stdenv.mkDerivation {
+          inherit version;
+          name = "hosttools";
+          src = inputs.sdk;
+          nativeBuildInputs = with pkgs; [
+            autoPatchelfHook
+            cmake
+            which
+            python38
+          ];
+          phases = [ "installPhase" "fixupPhase" ];
+          installPhase = ''
+            runHook preInstall
+            mkdir -p $out
+            $src/zephyr-sdk-x86_64-hosttools-standalone-0.9.sh -d $out -y
+            runHook postInstall
+          '';
+        };
         # toolchain factory
-        mkToolchain = name: (import ./mkToolchain.nix) { inherit pkgs inputs name version; };
+        mkToolchain = name: pkgs.stdenv.mkDerivation {
+          inherit name version;
+          src = builtins.getAttr "toolchain_${name}" inputs;
+          nativeBuildInputs = with pkgs; [
+            autoPatchelfHook
+            python38
+          ];
+          phases = [ "installPhase" "fixupPhase" ];
+          installPhase = ''
+            runHook preInstall
+            mkdir -p $out
+            cp -r $src/* $out
+            runHook postInstall
+          '';
+        };
         # build all toolchains
         toolchains = builtins.foldl' (acc: elem: acc // { ${elem} = mkToolchain elem; }) {} [ "x86_64" "arm" "aarch64" ];
       in
