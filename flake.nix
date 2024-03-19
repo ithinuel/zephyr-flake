@@ -21,12 +21,11 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        version = "0.16.5-1";
         # build hosttools (aka sdk?)
-        hosttools = pkgs.stdenv.mkDerivation {
-          inherit version;
-          name = "hosttools";
-          src = inputs.sdk;
+        zephyr-sdk = pkgs.stdenv.mkDerivation {
+          name = "zephyr-sdk";
+          version = "0.16.5-1";
+          srcs = map (arch: inputs."toolchain_${arch}") [ "x86_64" "arm" "aarch64" ];
           nativeBuildInputs = with pkgs; [
             autoPatchelfHook
             cmake
@@ -37,37 +36,24 @@
           installPhase = ''
             runHook preInstall
             mkdir -p $out
-            $src/zephyr-sdk-x86_64-hosttools-standalone-0.9.sh -d $out -y
-            cp -r $src/{cmake,sdk_*} $out
+
+            ${inputs.sdk}/zephyr-sdk-x86_64-hosttools-standalone-0.9.sh -d $out -y
+            cp -r ${inputs.sdk}/{cmake,sdk_*} $out
+
+            for src in $srcs; do
+                cp --no-preserve=mode -r $src/* $out
+            done
+
+            chmod +x $out/bin/*
+
             runHook postInstall
           '';
         };
-        # toolchain factory
-        mkToolchain = name: pkgs.stdenv.mkDerivation {
-          inherit name version;
-          src = builtins.getAttr "toolchain_${name}" inputs;
-          nativeBuildInputs = with pkgs; [
-            autoPatchelfHook
-            python38
-          ];
-          phases = [ "installPhase" "fixupPhase" ];
-          installPhase = ''
-            runHook preInstall
-            mkdir -p $out
-            cp -r $src/* $out
-            runHook postInstall
-          '';
-        };
-        # build all toolchains
-        toolchains = builtins.foldl' (acc: elem: acc // { ${elem} = mkToolchain elem; }) {} [ "x86_64" "arm" "aarch64" ];
       in
       {
         devShells.default = pkgs.mkShell {
             buildInputs = with pkgs; [
-                toolchains.x86_64
-                toolchains.arm
-                toolchains.aarch64
-                hosttools
+                zephyr-sdk
                 cmake
                 python311Packages.west
             ];
@@ -77,3 +63,4 @@
         };
       });
 }
+
