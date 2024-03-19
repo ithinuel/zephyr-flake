@@ -1,0 +1,116 @@
+{
+  "nodes": {
+    "flake-utils": {
+      "inputs": {
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1710146030,
+        "narHash": "sha256-SZ5L6eA7HJ/nmkzGG7/ISclqe6oZdOZTNoesiInkXPQ=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "b1d9ab70662946ef0850d488da1c9019f3a9752a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1710695816,
+        "narHash": "sha256-3Eh7fhEID17pv9ZxrPwCLfqXnYP006RKzSs0JptsN84=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "614b4613980a522ba49f0d194531beddbb7220d3",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-23.11",
+        "type": "indirect"
+      }
+    },
+    "root": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs",
+        "sdk": "sdk",
+        "toolchain_aarch64": "toolchain_aarch64",
+        "toolchain_arm": "toolchain_arm",
+        "toolchain_x86_64": "toolchain_x86_64"
+      }
+    },
+    "sdk": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1708266560,
+        "narHash": "sha256-jluFcBLPaMXRAttse7aSR1U/mI9/sba3tzvT64JwTSc=",
+        "type": "tarball",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/zephyr-sdk-0.16.5-1_linux-x86_64_minimal.tar.xz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/zephyr-sdk-0.16.5-1_linux-x86_64_minimal.tar.xz"
+      }
+    },
+    "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "toolchain_aarch64": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1708214886,
+        "narHash": "sha256-2gNjWocflb+VsLGTAFKaTslFNpM5Mce5od9/Szlq/0o=",
+        "type": "tarball",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_aarch64-zephyr-elf.tar.xz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_aarch64-zephyr-elf.tar.xz"
+      }
+    },
+    "toolchain_arm": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1708224064,
+        "narHash": "sha256-LN7ICcfSOXAoM/FFGdSquPEnYc7BPo08w2ToKUQ7OyU=",
+        "type": "tarball",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_arm-zephyr-eabi.tar.xz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_arm-zephyr-eabi.tar.xz"
+      }
+    },
+    "toolchain_x86_64": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1708214936,
+        "narHash": "sha256-2VqX0xtORQc8yXzIKF06E/gikIXNZHePFFvNZ/bMp/0=",
+        "type": "tarball",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_x86_64-zephyr-elf.tar.xz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_x86_64-zephyr-elf.tar.xz"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
