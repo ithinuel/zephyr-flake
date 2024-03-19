@@ -68,7 +68,11 @@
         # the flake but that will do for now
         requirementsFileList =  map (name: ./requirements-${name}.txt)
             [ "base" "build-test" "run-test" "compliance" ]; # "extras"
-        allRequirements = pkgs.lib.concatStrings (map (x: builtins.readFile x) requirementsFileList);
+        allRequirements = pkgs.lib.concatStrings (map (x: builtins.readFile x) requirementsFileList) + ''
+        # extra python requirements
+        click
+        cryptography
+        '';
         pythonEnv = mach-nix.lib.${system}.mkPython { requirements = allRequirements; };
       in
       {
