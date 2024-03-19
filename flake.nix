@@ -23,7 +23,7 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         # build hosttools (aka sdk?)
-        zephyr-sdk = pkgs.stdenv.mkDerivation {
+        zephyr-sdk = pkgs.stdenvNoCC.mkDerivation {
           name = "zephyr-sdk";
           version = "0.16.5-1";
           srcs = map (arch: inputs."toolchain_${arch}") [ "x86_64" "arm" "aarch64" ];
@@ -82,6 +82,7 @@
             cmake
             ninja
             pythonEnv
+            gperf
           ];
           shellHook = ''
           export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
