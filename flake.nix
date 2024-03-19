@@ -3,6 +3,7 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-23.11";
     flake-utils.url = "github:numtide/flake-utils";
+    mach-nix.url = "mach-nix";
 
     sdk.url = "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/zephyr-sdk-0.16.5-1_linux-x86_64_minimal.tar.xz";
     sdk.flake = false;
@@ -17,7 +18,7 @@
     toolchain_aarch64.flake = false;
   };
 
-  outputs = inputs@{ nixpkgs, flake-utils, ... }:
+  outputs = inputs@{ nixpkgs, flake-utils, mach-nix, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
@@ -49,18 +50,25 @@
             runHook postInstall
           '';
         };
+
+        # not so great because we need to copy the requirement files here to have them accessible to
+        # the flake but that will do for now
+        requirementsFileList =  map (name: ./requirements-${name}.txt)
+            [ "base" "build-test" "run-test" "compliance" ]; # "extras"
+        allRequirements = pkgs.lib.concatStrings (map (x: builtins.readFile x) requirementsFileList);
+        pythonEnv = mach-nix.lib.${system}.mkPython { requirements = allRequirements; };
       in
       {
         devShells.default = pkgs.mkShell {
-            buildInputs = with pkgs; [
-                zephyr-sdk
-                cmake
-                python311Packages.west
-                ninja
-            ];
-            shellHook = ''
-            export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
-            '';
+          buildInputs = with pkgs; [
+            zephyr-sdk
+            cmake
+            ninja
+            pythonEnv
+          ];
+          shellHook = ''
+          export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
+          '';
         };
       });
 }
