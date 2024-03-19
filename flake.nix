@@ -38,6 +38,7 @@
             runHook preInstall
             mkdir -p $out
             $src/zephyr-sdk-x86_64-hosttools-standalone-0.9.sh -d $out -y
+            cp -r $src/{cmake,sdk_*} $out
             runHook postInstall
           '';
         };
