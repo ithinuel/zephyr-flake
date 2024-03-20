@@ -25,11 +25,12 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
+        target_archs =  [ "x86_64" "arm" "aarch64" ];
         # build hosttools (aka sdk?)
         zephyr-sdk = pkgs.stdenvNoCC.mkDerivation {
           name = "zephyr-sdk";
           version = "0.16.5-1";
-          srcs = map (arch: inputs."toolchain_${arch}") [ "x86_64" "arm" "aarch64" ];
+          srcs = map (arch: inputs."toolchain_${arch}") target_archs;
           nativeBuildInputs = with pkgs; [
             autoPatchelfHook
             cmake
@@ -55,11 +56,13 @@
             done
 
             runHook postInstall
+          '';
 
-            # after nixos’ fixup, revert to the interpreter provided with the package
+          # This is hacky but we need to make sure this is done after the autoPatchelfHook
+          preFixup = ''
             postFixupHooks+=('
-                echo "Restoring interpreters…"
                 for bin in $(ls $out/sysroots/x86_64-pokysdk-linux/usr/bin); do
+                    echo "Set interpreter for $bin…"
                     patchelf --set-interpreter $out/sysroots/x86_64-pokysdk-linux/lib/ld-linux-x86-64.so.2 \
                         $out/sysroots/x86_64-pokysdk-linux/usr/bin/$bin
                 done
@@ -89,6 +92,10 @@
           ];
           shellHook = ''
           export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
+          export PATH="$PATH:${zephyr-sdk}/sysroots/x86_64-pokysdk-linux/usr/bin"
+          for src in ${builtins.concatStringsSep " " target_archs}; do
+            export PATH="$PATH:${zephyr-sdk}/$src-zephyr-eabi/bin"
+          done
           '';
         };
       });
