@@ -16,6 +16,9 @@
 
     toolchain_aarch64.url = "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_aarch64-zephyr-elf.tar.xz";
     toolchain_aarch64.flake = false;
+
+    zephyr_requirements.url = "github:zephyrproject-rtos/zephyr";
+    zephyr_requirements.flake = false;
   };
 
   outputs = inputs@{ nixpkgs, flake-utils, mach-nix, ... }:
@@ -66,7 +69,7 @@
 
         # not so great because we need to copy the requirement files here to have them accessible to
         # the flake but that will do for now
-        requirementsFileList =  map (name: ./requirements-${name}.txt)
+        requirementsFileList =  map (name: "${inputs.zephyr_requirements}/scripts/requirements-${name}.txt")
             [ "base" "build-test" "run-test" "compliance" ]; # "extras"
         allRequirements = pkgs.lib.concatStrings (map (x: builtins.readFile x) requirementsFileList) + ''
         # extra python requirements
