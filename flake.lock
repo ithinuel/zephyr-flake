@@ -106,7 +106,8 @@
         "sdk": "sdk",
         "toolchain_aarch64": "toolchain_aarch64",
         "toolchain_arm": "toolchain_arm",
-        "toolchain_x86_64": "toolchain_x86_64"
+        "toolchain_x86_64": "toolchain_x86_64",
+        "zephyr_requirements": "zephyr_requirements"
       }
     },
     "sdk": {
@@ -174,6 +175,22 @@
       "original": {
         "type": "tarball",
         "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_x86_64-zephyr-elf.tar.xz"
+      }
+    },
+    "zephyr_requirements": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1710948422,
+        "narHash": "sha256-3z1Ia+ckpi7KCK6moeN/5VEZmvzGJ8eIeIsP0yCDIvI=",
+        "owner": "zephyrproject-rtos",
+        "repo": "zephyr",
+        "rev": "3d1a4039eabe1e72163088baefec960076aec686",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zephyrproject-rtos",
+        "repo": "zephyr",
+        "type": "github"
       }
     }
   },
