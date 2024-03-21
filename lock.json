@@ -152,10 +152,10 @@
         "version": "0.19.1"
       },
       "graphviz": {
-        "sha256": "63d1ae75f1ca60f980e1cd3a61a678eef8de645ef8427736b2bb9bdd035ca44b",
+        "sha256": "81f848f2904515d8cd359cc611faba817598d2feaac4027b266aa3eda7b3dde5",
         "type": "url",
-        "url": "https://files.pythonhosted.org/packages/18/79/12d3f468cc67a04d0db640bdd54913e60cd9828e3eada107d330d760d61a/graphviz-0.20.2-py3-none-any.whl",
-        "version": "0.20.2"
+        "url": "https://files.pythonhosted.org/packages/00/be/d59db2d1d52697c6adc9eacaf50e8965b6345cc143f671e1ed068818d5cf/graphviz-0.20.3-py3-none-any.whl",
+        "version": "0.20.3"
       },
       "grpcio": {
         "sha256": "71f11fd63365ade276c9d4a7b7df5c136f9030e3457107e1791b3737a9b9ed6a",

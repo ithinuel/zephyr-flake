@@ -1,15 +1,17 @@
-{ pkgs, inputs, target_archs }: {
+{ pkgs, inputs, target_archs }: let
+    sdk = inputs."${pkgs.system}_sdk";
+in {
   name = "zephyr-sdk";
   version = "0.16.5-1";
-  srcs = map (arch: inputs."toolchain_${arch}") target_archs;
+  srcs = map (arch: inputs."${pkgs.system}_toolchain_${arch}") target_archs;
   nativeBuildInputs = with pkgs; [ autoPatchelfHook cmake which python38 ];
   phases = [ "installPhase" "fixupPhase" ];
   installPhase = ''
     runHook preInstall
 
     mkdir -p $out
-    ${inputs.sdk}/zephyr-sdk-x86_64-hosttools-standalone-0.9.sh -d $out -y
-    cp -r ${inputs.sdk}/{cmake,sdk_*} $out
+    ${sdk}/zephyr-sdk-x86_64-hosttools-standalone-0.9.sh -d $out -y
+    cp -r ${sdk}/{cmake,sdk_*} $out
 
     addAutoPatchelfSearchPath $out/sysroots/x86_64-pokysdk-linux/lib
 
