@@ -3,7 +3,8 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-23.11";
     flake-utils.url = "github:numtide/flake-utils";
-    mach-nix.url = "mach-nix";
+    dream2nix.url = "github:nix-community/dream2nix";
+    dream2nix.inputs.nixpkgs.follows = "nixpkgs";
 
     sdk.url = "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/zephyr-sdk-0.16.5-1_linux-x86_64_minimal.tar.xz";
     sdk.flake = false;
@@ -17,87 +18,54 @@
     toolchain_aarch64.url = "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_aarch64-zephyr-elf.tar.xz";
     toolchain_aarch64.flake = false;
 
-    zephyr_requirements.url = "github:zephyrproject-rtos/zephyr";
-    zephyr_requirements.flake = false;
+    zephyr.url = "github:zephyrproject-rtos/zephyr";
+    zephyr.flake = false;
   };
 
-  outputs = inputs@{ nixpkgs, flake-utils, mach-nix, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-        target_archs =  [ "x86_64" "arm" "aarch64" ];
-        # build hosttools (aka sdk?)
-        zephyr-sdk = pkgs.stdenvNoCC.mkDerivation {
-          name = "zephyr-sdk";
-          version = "0.16.5-1";
-          srcs = map (arch: inputs."toolchain_${arch}") target_archs;
-          nativeBuildInputs = with pkgs; [
-            autoPatchelfHook
-            cmake
-            which
-            python38
-          ];
-          phases = [ "installPhase" "fixupPhase" ];
-          installPhase = ''
-            runHook preInstall
+  outputs = inputs@{ self, nixpkgs, flake-utils, dream2nix, mach-nix, ... }:
+    flake-utils.lib.simpleFlake {
+      inherit self nixpkgs;
+      name = "zephyr-flake";
+      shell = { pkgs }:
+        let
+          target_archs = [ "x86_64" "arm" "aarch64" ];
+          # build hosttools (aka sdk?)
+          zephyr-sdk = pkgs.stdenvNoCC.mkDerivation
+            (import ./zephyr-sdk.nix { inherit pkgs inputs target_archs; });
 
-            mkdir -p $out
-            ${inputs.sdk}/zephyr-sdk-x86_64-hosttools-standalone-0.9.sh -d $out -y
-            cp -r ${inputs.sdk}/{cmake,sdk_*} $out
+          pythonEnv = (dream2nix.lib.evalModules {
+            packageSets.nixpkgs = pkgs;
+            modules = [
+              ({ config, lib, dream2nix, ... }: {
+                imports = [ dream2nix.modules.dream2nix.pip ];
 
-            addAutoPatchelfSearchPath $out/sysroots/x86_64-pokysdk-linux/lib
+                deps = { nixpkgs, ... }: { python = nixpkgs.python311; };
 
-            for src in $srcs; do
-                arch=$(basename $(find $src -maxdepth 1 -name "*zephyr*"))
-                mkdir -p $out/$arch
-                cp -r $src/* $out/$arch
-                addAutoPatchelfSearchPath $out/$arch/lib
-                addAutoPatchelfSearchPath $out/$arch/libexec
-            done
+                name = "zephyr-scripts";
+                version = "0.0.1";
 
-            runHook postInstall
-          '';
-
-          # This is hacky but we need to make sure this is done after the autoPatchelfHook
-          preFixup = ''
-            postFixupHooks+=('
-                for bin in $(ls $out/sysroots/x86_64-pokysdk-linux/usr/bin); do
-                    echo "Set interpreter for $bin…"
-                    patchelf --set-interpreter $out/sysroots/x86_64-pokysdk-linux/lib/ld-linux-x86-64.so.2 \
-                        $out/sysroots/x86_64-pokysdk-linux/usr/bin/$bin
-                done
-            ')
-          '';
-        };
-
-        # not so great because we need to copy the requirement files here to have them accessible to
-        # the flake but that will do for now
-        requirementsFileList =  map (name: "${inputs.zephyr_requirements}/scripts/requirements-${name}.txt")
-            [ "base" "build-test" "run-test" "compliance" ]; # "extras"
-        allRequirements = pkgs.lib.concatStrings (map (x: builtins.readFile x) requirementsFileList) + ''
-        # extra python requirements
-        click
-        cryptography
-        '';
-        pythonEnv = mach-nix.lib.${system}.mkPython { requirements = allRequirements; };
-      in
-      {
-        devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            zephyr-sdk
-            cmake
-            ninja
-            pythonEnv
-            gperf
-          ];
+                pip.requirementsFiles =
+                  [ "${inputs.zephyr}/scripts/requirements.txt" ];
+                pip.requirementsList = [ "click" "cryptography" ];
+                pip.flattenDependencies = true;
+              })
+              {
+                paths.projectRoot = ./.;
+                paths.package = ./.;
+              }
+            ];
+          }).devShell;
+        in pkgs.mkShell {
+          inputsFrom = [ pythonEnv ];
+          buildInputs = with pkgs; [ zephyr-sdk cmake ninja gperf ];
           shellHook = ''
-          export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
-          export PATH="$PATH:${zephyr-sdk}/sysroots/x86_64-pokysdk-linux/usr/bin"
-          for src in ${builtins.concatStringsSep " " target_archs}; do
-            export PATH="$PATH:${zephyr-sdk}/$src-zephyr-eabi/bin"
-          done
+            export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
+            export PATH="$PATH:${zephyr-sdk}/sysroots/x86_64-pokysdk-linux/usr/bin"
+            for src in ${builtins.concatStringsSep " " target_archs}; do
+              export PATH="$PATH:${zephyr-sdk}/$src-zephyr-eabi/bin"
+            done
           '';
         };
-      });
+    };
 }
 
