@@ -6,20 +6,37 @@
     dream2nix.url = "github:nix-community/dream2nix";
     dream2nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    sdk.url = "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/zephyr-sdk-0.16.5-1_linux-x86_64_minimal.tar.xz";
-    sdk.flake = false;
+    x86_64-linux_sdk.url =
+      "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/zephyr-sdk-0.16.5-1_linux-x86_64_minimal.tar.xz";
+    x86_64-linux_sdk.flake = false;
+    x86_64-linux_toolchain_x86_64.url =
+      "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_x86_64-zephyr-elf.tar.xz";
+    x86_64-linux_toolchain_x86_64.flake = false;
+    x86_64-linux_toolchain_arm.url =
+      "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_arm-zephyr-eabi.tar.xz";
+    x86_64-linux_toolchain_arm.flake = false;
+    x86_64-linux_toolchain_aarch64.url =
+      "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_aarch64-zephyr-elf.tar.xz";
+    x86_64-linux_toolchain_aarch64.flake = false;
 
-    toolchain_x86_64.url = "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_x86_64-zephyr-elf.tar.xz";
-    toolchain_x86_64.flake = false;
-
-    toolchain_arm.url = "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_arm-zephyr-eabi.tar.xz";
-    toolchain_arm.flake = false;
-
-    toolchain_aarch64.url = "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_aarch64-zephyr-elf.tar.xz";
-    toolchain_aarch64.flake = false;
+    aarch64-linux_sdk.url =
+      "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/zephyr-sdk-0.16.5-1_linux-aarch64_minimal.tar.xz";
+    aarch64-linux_sdk.flake = false;
+    aarch64-linux_toolchain_x86_64.url =
+      "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-aarch64_x86_64-zephyr-elf.tar.xz";
+    aarch64-linux_toolchain_x86_64.flake = false;
+    aarch64-linux_toolchain_arm.url =
+      "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-aarch64_arm-zephyr-eabi.tar.xz";
+    aarch64-linux_toolchain_arm.flake = false;
+    aarch64-linux_toolchain_aarch64.url =
+      "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-aarch64_aarch64-zephyr-elf.tar.xz";
+    aarch64-linux_toolchain_aarch64.flake = false;
 
     zephyr.url = "github:zephyrproject-rtos/zephyr";
     zephyr.flake = false;
+
+    pyocd.url = "github:pyocd/pyocd";
+    pyocd.flake = false;
   };
 
   outputs = inputs@{ self, nixpkgs, flake-utils, dream2nix, mach-nix, ... }:
@@ -29,7 +46,7 @@
       shell = { pkgs }:
         let
           target_archs = [ "x86_64" "arm" "aarch64" ];
-          # build hosttools (aka sdk?)
+
           zephyr-sdk = pkgs.stdenvNoCC.mkDerivation
             (import ./zephyr-sdk.nix { inherit pkgs inputs target_archs; });
 
