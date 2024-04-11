@@ -1,57 +1,5 @@
 {
   "nodes": {
-    "aarch64-linux_sdk": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1708266646,
-        "narHash": "sha256-Lzeb0utqBSH0pU+MxlfQgkrP531mfQKQ9gb47iPQwQE=",
-        "type": "tarball",
-        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/zephyr-sdk-0.16.5-1_linux-aarch64_minimal.tar.xz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/zephyr-sdk-0.16.5-1_linux-aarch64_minimal.tar.xz"
-      }
-    },
-    "aarch64-linux_toolchain_aarch64": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1708222275,
-        "narHash": "sha256-8FMrTGFS+OabOhVtHI+r2Kt81hbUkBNGk5IZ/b9lQFE=",
-        "type": "tarball",
-        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-aarch64_aarch64-zephyr-elf.tar.xz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-aarch64_aarch64-zephyr-elf.tar.xz"
-      }
-    },
-    "aarch64-linux_toolchain_arm": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1708231288,
-        "narHash": "sha256-2/kmRWehTRBu0f8FE8/qOek5w73+37fCTYzlg8hAFvQ=",
-        "type": "tarball",
-        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-aarch64_arm-zephyr-eabi.tar.xz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-aarch64_arm-zephyr-eabi.tar.xz"
-      }
-    },
-    "aarch64-linux_toolchain_x86_64": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1708218832,
-        "narHash": "sha256-OeB2WQ67dwEARQH/K36p3giPJ8ppMzyirN8rELiH7kg=",
-        "type": "tarball",
-        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-aarch64_x86_64-zephyr-elf.tar.xz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-aarch64_x86_64-zephyr-elf.tar.xz"
-      }
-    },
     "dream2nix": {
       "inputs": {
         "nixpkgs": [
@@ -61,11 +9,11 @@
         "pyproject-nix": "pyproject-nix"
       },
       "locked": {
-        "lastModified": 1710959519,
-        "narHash": "sha256-n7ZXeETg3LDXIESETc21ZN+3SWIu5lvdBI4IISiLLOE=",
+        "lastModified": 1722526955,
+        "narHash": "sha256-fFS8aDnfK9Qfm2FLnQ8pqWk8FzvFEv5LvTuZTZLREnc=",
         "owner": "nix-community",
         "repo": "dream2nix",
-        "rev": "45ec75f4663a26093bd40a75b7366da558a01545",
+        "rev": "3fd4c14d3683baac8d1f94286ae14fe160888b51",
         "type": "github"
       },
       "original": {
@@ -92,62 +40,46 @@
         "type": "github"
       }
     },
-    "flake-utils_2": {
-      "locked": {
-        "lastModified": 1642700792,
-        "narHash": "sha256-XqHrk7hFb+zBvRg6Ghl+AZDq03ov6OshJLiSWOoX5es=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "846b2ae0fc4cc943637d3d1def4454213e203cba",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "mach-nix": {
+    "flakegen": {
       "inputs": {
-        "flake-utils": "flake-utils_2",
-        "nixpkgs": "nixpkgs",
-        "pypi-deps-db": "pypi-deps-db"
+        "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1705470643,
-        "narHash": "sha256-CqgkRcvOonJ2fL6542/ykZR3yL6qVLWy0pdyY5YKRlE=",
-        "owner": "DavHau",
-        "repo": "mach-nix",
-        "rev": "28f563aeb8c9e679a3f2b531c728573fce7a4594",
+        "lastModified": 1707120544,
+        "narHash": "sha256-pXwH9NLXjhjnaz1n7w5m36gVUZ1GVkvtltsLnvVPFJY=",
+        "owner": "jorsn",
+        "repo": "flakegen",
+        "rev": "8b11749b0724700273462a674dd16e5549fe2790",
         "type": "github"
       },
       "original": {
-        "id": "mach-nix",
-        "type": "indirect"
+        "owner": "jorsn",
+        "repo": "flakegen",
+        "type": "github"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1643805626,
-        "narHash": "sha256-AXLDVMG+UaAGsGSpOtQHPIKB+IZ0KSd9WS77aanGzgc=",
+        "lastModified": 1724098845,
+        "narHash": "sha256-D5HwjQw/02fuXbR4LCTo64koglP2j99hkDR79/3yLOE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "554d2d8aa25b6e583575459c297ec23750adb6cb",
+        "rev": "f1bad50880bae73ff2d82fafc22010b4fc097a9c",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
-        "ref": "nixos-unstable",
+        "ref": "nixos-24.05",
         "type": "indirect"
       }
     },
-    "nixpkgs_2": {
+    "nixpkgs_python38": {
       "locked": {
-        "lastModified": 1710838473,
-        "narHash": "sha256-RLvwdQSENKOaLdKhNie8XqHmTXzNm00/M/THj6zplQo=",
+        "lastModified": 1720535198,
+        "narHash": "sha256-zwVvxrdIzralnSbcpghA92tWu2DV2lwv89xZc8MTrbg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "fa9f817df522ac294016af3d40ccff82f5fd3a63",
+        "rev": "205fd4226592cc83fd4c0885a3e4c9c400efabb5",
         "type": "github"
       },
       "original": {
@@ -181,32 +113,16 @@
     "pyocd": {
       "flake": false,
       "locked": {
-        "lastModified": 1697740621,
-        "narHash": "sha256-Tf9dJOtl8w2bKxKg7k55J13f9NARoYiZDEndI3ATs2Y=",
+        "lastModified": 1719531783,
+        "narHash": "sha256-D3Jeay2DWqb14pD8az9PkEnY14BF2+dZ64jvYYh4Q2w=",
         "owner": "pyocd",
         "repo": "pyocd",
-        "rev": "5ab5c327987c4c3ba5a37928cac25263d4db7586",
+        "rev": "456cbf876228382af10247cf5d210b6ffea6ff67",
         "type": "github"
       },
       "original": {
         "owner": "pyocd",
         "repo": "pyocd",
-        "type": "github"
-      }
-    },
-    "pypi-deps-db": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1685526402,
-        "narHash": "sha256-V0SXx0dWlUBL3E/wHWTszrkK2dOnuYYnBc7n6e0+NQU=",
-        "owner": "DavHau",
-        "repo": "pypi-deps-db",
-        "rev": "ba35683c35218acb5258b69a9916994979dc73a9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "DavHau",
-        "repo": "pypi-deps-db",
         "type": "github"
       }
     },
@@ -229,20 +145,73 @@
     },
     "root": {
       "inputs": {
-        "aarch64-linux_sdk": "aarch64-linux_sdk",
-        "aarch64-linux_toolchain_aarch64": "aarch64-linux_toolchain_aarch64",
-        "aarch64-linux_toolchain_arm": "aarch64-linux_toolchain_arm",
-        "aarch64-linux_toolchain_x86_64": "aarch64-linux_toolchain_x86_64",
         "dream2nix": "dream2nix",
         "flake-utils": "flake-utils",
-        "mach-nix": "mach-nix",
-        "nixpkgs": "nixpkgs_2",
+        "flakegen": "flakegen",
+        "nixpkgs": "nixpkgs",
+        "nixpkgs_python38": "nixpkgs_python38",
         "pyocd": "pyocd",
-        "x86_64-linux_sdk": "x86_64-linux_sdk",
-        "x86_64-linux_toolchain_aarch64": "x86_64-linux_toolchain_aarch64",
-        "x86_64-linux_toolchain_arm": "x86_64-linux_toolchain_arm",
-        "x86_64-linux_toolchain_x86_64": "x86_64-linux_toolchain_x86_64",
+        "sdk_linux-aarch64": "sdk_linux-aarch64",
+        "sdk_linux-x86_64": "sdk_linux-x86_64",
+        "sdk_macos-aarch64": "sdk_macos-aarch64",
+        "sdk_macos-x86_64": "sdk_macos-x86_64",
+        "toolchain_linux-aarch64_aarch64-zephyr-elf": "toolchain_linux-aarch64_aarch64-zephyr-elf",
+        "toolchain_linux-aarch64_arm-zephyr-eabi": "toolchain_linux-aarch64_arm-zephyr-eabi",
+        "toolchain_linux-x86_64_aarch64-zephyr-elf": "toolchain_linux-x86_64_aarch64-zephyr-elf",
+        "toolchain_linux-x86_64_arm-zephyr-eabi": "toolchain_linux-x86_64_arm-zephyr-eabi",
+        "toolchain_macos-aarch64_aarch64-zephyr-elf": "toolchain_macos-aarch64_aarch64-zephyr-elf",
+        "toolchain_macos-aarch64_arm-zephyr-eabi": "toolchain_macos-aarch64_arm-zephyr-eabi",
+        "toolchain_macos-x86_64_aarch64-zephyr-elf": "toolchain_macos-x86_64_aarch64-zephyr-elf",
+        "toolchain_macos-x86_64_arm-zephyr-eabi": "toolchain_macos-x86_64_arm-zephyr-eabi",
         "zephyr": "zephyr"
+      }
+    },
+    "sdk_linux-aarch64": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-S/FTfVwwgG3kH5csU9iq3khSsifNCf8/RT71n/QLOw4=",
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/zephyr-sdk-0.16.8_linux-aarch64_minimal.tar.xz"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/zephyr-sdk-0.16.8_linux-aarch64_minimal.tar.xz"
+      }
+    },
+    "sdk_linux-x86_64": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-C1Q+bIWAUXRk0hPH4NtJxrUO1+FE6VlDYp/ZmAMO0AA=",
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/zephyr-sdk-0.16.8_linux-x86_64_minimal.tar.xz"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/zephyr-sdk-0.16.8_linux-x86_64_minimal.tar.xz"
+      }
+    },
+    "sdk_macos-aarch64": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-r0mD6EE22BC427SVpXMS3dw7qcpqPZrI5Ns5XnEID9k=",
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/zephyr-sdk-0.16.8_macos-aarch64_minimal.tar.xz"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/zephyr-sdk-0.16.8_macos-aarch64_minimal.tar.xz"
+      }
+    },
+    "sdk_macos-x86_64": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-bg1pGD16zM/Rh8yXo2dWmmNFWtqgvsDR3dSv8JUKYEY=",
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/zephyr-sdk-0.16.8_macos-x86_64_minimal.tar.xz"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/zephyr-sdk-0.16.8_macos-x86_64_minimal.tar.xz"
       }
     },
     "slimlock": {
@@ -282,66 +251,125 @@
         "type": "github"
       }
     },
-    "x86_64-linux_sdk": {
-      "flake": false,
+    "systems_2": {
       "locked": {
-        "lastModified": 1708266560,
-        "narHash": "sha256-jluFcBLPaMXRAttse7aSR1U/mI9/sba3tzvT64JwTSc=",
-        "type": "tarball",
-        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/zephyr-sdk-0.16.5-1_linux-x86_64_minimal.tar.xz"
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
       },
       "original": {
-        "type": "tarball",
-        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/zephyr-sdk-0.16.5-1_linux-x86_64_minimal.tar.xz"
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
       }
     },
-    "x86_64-linux_toolchain_aarch64": {
+    "toolchain_linux-aarch64_aarch64-zephyr-elf": {
       "flake": false,
       "locked": {
-        "lastModified": 1708214886,
-        "narHash": "sha256-2gNjWocflb+VsLGTAFKaTslFNpM5Mce5od9/Szlq/0o=",
-        "type": "tarball",
-        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_aarch64-zephyr-elf.tar.xz"
+        "narHash": "sha256-sXYW2qEH1YP4yRNo3vb2xtiuw2tj3HBjX2uXkEbnqD8=",
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/toolchain_linux-aarch64_aarch64-zephyr-elf.tar.xz"
       },
       "original": {
-        "type": "tarball",
-        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_aarch64-zephyr-elf.tar.xz"
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/toolchain_linux-aarch64_aarch64-zephyr-elf.tar.xz"
       }
     },
-    "x86_64-linux_toolchain_arm": {
+    "toolchain_linux-aarch64_arm-zephyr-eabi": {
       "flake": false,
       "locked": {
-        "lastModified": 1708224064,
-        "narHash": "sha256-LN7ICcfSOXAoM/FFGdSquPEnYc7BPo08w2ToKUQ7OyU=",
-        "type": "tarball",
-        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_arm-zephyr-eabi.tar.xz"
+        "narHash": "sha256-zGhRiVLDZpKzfvWLZwBfi/4ZsOXRwm1PcYDK5Cjj5IQ=",
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/toolchain_linux-aarch64_arm-zephyr-eabi.tar.xz"
       },
       "original": {
-        "type": "tarball",
-        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_arm-zephyr-eabi.tar.xz"
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/toolchain_linux-aarch64_arm-zephyr-eabi.tar.xz"
       }
     },
-    "x86_64-linux_toolchain_x86_64": {
+    "toolchain_linux-x86_64_aarch64-zephyr-elf": {
       "flake": false,
       "locked": {
-        "lastModified": 1708214936,
-        "narHash": "sha256-2VqX0xtORQc8yXzIKF06E/gikIXNZHePFFvNZ/bMp/0=",
-        "type": "tarball",
-        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_x86_64-zephyr-elf.tar.xz"
+        "narHash": "sha256-PJLBv78rusGUxOJuHKo+jlvOFlaap7p765IShdmJZf0=",
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/toolchain_linux-x86_64_aarch64-zephyr-elf.tar.xz"
       },
       "original": {
-        "type": "tarball",
-        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.5-1/toolchain_linux-x86_64_x86_64-zephyr-elf.tar.xz"
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/toolchain_linux-x86_64_aarch64-zephyr-elf.tar.xz"
+      }
+    },
+    "toolchain_linux-x86_64_arm-zephyr-eabi": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-9gJ8o/B2NYOtqXbSnjlwvswyzpmiywlgRGaGI6TexD4=",
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/toolchain_linux-x86_64_arm-zephyr-eabi.tar.xz"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/toolchain_linux-x86_64_arm-zephyr-eabi.tar.xz"
+      }
+    },
+    "toolchain_macos-aarch64_aarch64-zephyr-elf": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-26m5TEhOF4OHEe2OAO/x45fFJdgUu0vNWC0wVaqg0F0=",
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/toolchain_macos-aarch64_aarch64-zephyr-elf.tar.xz"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/toolchain_macos-aarch64_aarch64-zephyr-elf.tar.xz"
+      }
+    },
+    "toolchain_macos-aarch64_arm-zephyr-eabi": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-qaUJZrIgJD2qKF05RwWxzFL3EPdj3IQwU1yHGFDhUz8=",
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/toolchain_macos-aarch64_arm-zephyr-eabi.tar.xz"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/toolchain_macos-aarch64_arm-zephyr-eabi.tar.xz"
+      }
+    },
+    "toolchain_macos-x86_64_aarch64-zephyr-elf": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-77apyQlkDLSOPhYcYwqTVQh18SHjYqCEW1BGIqyMrlM=",
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/toolchain_macos-x86_64_aarch64-zephyr-elf.tar.xz"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/toolchain_macos-x86_64_aarch64-zephyr-elf.tar.xz"
+      }
+    },
+    "toolchain_macos-x86_64_arm-zephyr-eabi": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-8ZPH6LHl6KPp4Iy2YvPDgUzCAwxc1ofKsXMWut0xfEw=",
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/toolchain_macos-x86_64_arm-zephyr-eabi.tar.xz"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/toolchain_macos-x86_64_arm-zephyr-eabi.tar.xz"
       }
     },
     "zephyr": {
       "flake": false,
       "locked": {
-        "lastModified": 1710973208,
-        "narHash": "sha256-VSRj28YhF8XazwZC9fuzgB0u6ZaUINYLgjKyaz7wU4E=",
+        "lastModified": 1724231024,
+        "narHash": "sha256-T+r6Ek15w77JxDIojPdHHnw1i0LuuYfuEfdNlJmIpoI=",
         "owner": "zephyrproject-rtos",
         "repo": "zephyr",
-        "rev": "f90c2b1122ead7c8dcb4c9cbf98abf2544b77ee0",
+        "rev": "34206f5505b582942ae4c393d7133a5ea6c849bd",
         "type": "github"
       },
       "original": {
