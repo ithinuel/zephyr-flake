@@ -1,40 +1,38 @@
-{ pkgs, inputs, target_archs }: let
-    sdk = inputs."${pkgs.system}_sdk";
-in {
-  name = "zephyr-sdk";
-  version = "0.16.5-1";
-  srcs = map (arch: inputs."${pkgs.system}_toolchain_${arch}") target_archs;
-  nativeBuildInputs = with pkgs; [ autoPatchelfHook cmake which python38 ];
-  phases = [ "installPhase" "fixupPhase" ];
-  installPhase = ''
-    runHook preInstall
+{ version, host, toolchain }: {
+  "toolchain-${toolchain}" = stdenv.mkDerivation ({ pkgs, lib, ncurses5, python38, libxcrypt-legacy, runtimeShell, ... }: {
+    pname = "toolchain-${toolchain}";
+    version = "${version}";
 
-    mkdir -p $out
-    ${sdk}/zephyr-sdk-x86_64-hosttools-standalone-0.9.sh -d $out -y
-    cp -r ${sdk}/{cmake,sdk_*} $out
+    src = inputs."toolchain_${host}_${toolchain}";
 
-    addAutoPatchelfSearchPath $out/sysroots/x86_64-pokysdk-linux/lib
+    dontConfigure = true;
+    dontBuild = true;
+    dontPatchELF = true;
+    dontStrip = true;
 
-    for src in $srcs; do
-        arch=$(basename $(find $src -maxdepth 1 -name "*zephyr*"))
-        mkdir -p $out/$arch
-        cp -r $src/* $out/$arch
+    installPhase = ''
+      mkdir -p $out
+      cp -r * $out
+    '';
 
-        addAutoPatchelfSearchPath $out/$arch/lib
-        addAutoPatchelfSearchPath $out/$arch/libexec
-    done
+    preFixup = ''
+      find $out -type f | while read f; do
+        patchelf "$f" > /dev/null 2>&1 || continue
+        patchelf --set-interpreter $(cat ${stdenv.cc}/nix-support/dynamic-linker) "$f" || true
+        patchelf --set-rpath ${lib.makeLibraryPath [ "$out" stdenv.cc.cc ncurses5 python38 libxcrypt-legacy ]} "$f" || true
+      done
+    '';
 
-    runHook postInstall
-  '';
+    postFixup = ''
+      mv $out/bin/arm-none-eabi-gdb $out/bin/arm-none-eabi-gdb-unwrapped
+      cat <<EOF > $out/bin/arm-none-eabi-gdb
+      #!${runtimeShell}
+      export PYTHONPATH=${python38}/lib/python3.9
+      export PYTHONHOME=${python38.interpreter}
+      exec $out/bin/arm-none-eabi-gdb-unwrapped "\$@"
+      EOF
+      chmod +x $out/bin/arm-none-eabi-gdb
+    '';
 
-  # This is hacky but we need to make sure this is done after the autoPatchelfHook
-  preFixup = ''
-    postFixupHooks+=('
-        for bin in $(ls $out/sysroots/x86_64-pokysdk-linux/usr/bin); do
-            echo "Set interpreter for $bin…"
-            patchelf --set-interpreter $out/sysroots/x86_64-pokysdk-linux/lib/ld-linux-x86-64.so.2 \
-                $out/sysroots/x86_64-pokysdk-linux/usr/bin/$bin
-        done
-    ')
-  '';
+  });
 }
