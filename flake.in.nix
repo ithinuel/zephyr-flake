@@ -70,16 +70,9 @@ in
       nixpkgs.url = "nixpkgs/nixos-24.05";
       nixpkgs_python38.url = "nixpkgs/nixos-23.11";
       flake-utils.url = "github:numtide/flake-utils";
-      dream2nix.url = "github:nix-community/dream2nix";
-      dream2nix.inputs.nixpkgs.follows = "nixpkgs";
-
-      zephyr.url = "github:zephyrproject-rtos/zephyr";
-      zephyr.flake = false;
-      pyocd.url = "github:pyocd/pyocd";
-      pyocd.flake = false;
     };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs_python38, flake-utils, dream2nix, ... }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs_python38, flake-utils, ... }:
     (flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
@@ -145,35 +138,9 @@ in
               (arch: "ln -s ${ packages.${arch2toolchain arch}.outPath } $out/${arch}")
               selected_archs;
           };
-          zephyr-python-env = dream2nix.lib.evalModules {
-            packageSets.nixpkgs = pkgs;
-            modules = [
-              ({ config, lib, dream2nix, ... }: {
-                name = "zephyr-python-env";
-                inherit version;
-
-                imports = [ dream2nix.modules.dream2nix.pip ];
-                deps = { nixpkgs, ... }: { python = nixpkgs.python311; };
-
-                pip.requirementsFiles =
-                  [ "${inputs.zephyr}/scripts/requirements.txt" ];
-                pip.requirementsList = [
-                    "click" "cryptography"
-                ];
-                pip.flattenDependencies = true;
-              })
-              {
-                paths.projectRoot = ./.;
-                paths.package = ./.;
-              }
-            ];
-          };
-        } // (builtins.foldl' (acc: arch: (genToolchainPackages arch) // acc) { } selected_archs);
+        } // (pkgs.lib.foldl (acc: arch: (genToolchainPackages arch) // acc) { } selected_archs);
 
         devShells.default = pkgs.mkShell {
-          inputsFrom = [
-            #packages.zephyr-python-env.devShell
-          ];
           buildInputs = with pkgs; [ cmake ninja gperf dtc qemu packages.zephyr-sdk thrift ] ++
             builtins.map (arch: packages.${arch2toolchain arch}) selected_archs;
           shellHook = ''
