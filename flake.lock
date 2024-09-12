@@ -1,27 +1,5 @@
 {
   "nodes": {
-    "dream2nix": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "purescript-overlay": "purescript-overlay",
-        "pyproject-nix": "pyproject-nix"
-      },
-      "locked": {
-        "lastModified": 1722526955,
-        "narHash": "sha256-fFS8aDnfK9Qfm2FLnQ8pqWk8FzvFEv5LvTuZTZLREnc=",
-        "owner": "nix-community",
-        "repo": "dream2nix",
-        "rev": "3fd4c14d3683baac8d1f94286ae14fe160888b51",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "dream2nix",
-        "type": "github"
-      }
-    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -60,11 +38,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1724098845,
-        "narHash": "sha256-D5HwjQw/02fuXbR4LCTo64koglP2j99hkDR79/3yLOE=",
+        "lastModified": 1725930920,
+        "narHash": "sha256-RVhD9hnlTT2nJzPHlAqrWqCkA7T6CYrP41IoVRkciZM=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "f1bad50880bae73ff2d82fafc22010b4fc097a9c",
+        "rev": "44a71ff39c182edaf25a7ace5c9454e7cba2c658",
         "type": "github"
       },
       "original": {
@@ -88,69 +66,12 @@
         "type": "indirect"
       }
     },
-    "purescript-overlay": {
-      "inputs": {
-        "nixpkgs": [
-          "dream2nix",
-          "nixpkgs"
-        ],
-        "slimlock": "slimlock"
-      },
-      "locked": {
-        "lastModified": 1696022621,
-        "narHash": "sha256-eMjFmsj2G1E0Q5XiibUNgFjTiSz0GxIeSSzzVdoN730=",
-        "owner": "thomashoneyman",
-        "repo": "purescript-overlay",
-        "rev": "047c7933abd6da8aa239904422e22d190ce55ead",
-        "type": "github"
-      },
-      "original": {
-        "owner": "thomashoneyman",
-        "repo": "purescript-overlay",
-        "type": "github"
-      }
-    },
-    "pyocd": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1719531783,
-        "narHash": "sha256-D3Jeay2DWqb14pD8az9PkEnY14BF2+dZ64jvYYh4Q2w=",
-        "owner": "pyocd",
-        "repo": "pyocd",
-        "rev": "456cbf876228382af10247cf5d210b6ffea6ff67",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pyocd",
-        "repo": "pyocd",
-        "type": "github"
-      }
-    },
-    "pyproject-nix": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1702448246,
-        "narHash": "sha256-hFg5s/hoJFv7tDpiGvEvXP0UfFvFEDgTdyHIjDVHu1I=",
-        "owner": "davhau",
-        "repo": "pyproject.nix",
-        "rev": "5a06a2697b228c04dd2f35659b4b659ca74f7aeb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "davhau",
-        "ref": "dream2nix",
-        "repo": "pyproject.nix",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
-        "dream2nix": "dream2nix",
         "flake-utils": "flake-utils",
         "flakegen": "flakegen",
         "nixpkgs": "nixpkgs",
         "nixpkgs_python38": "nixpkgs_python38",
-        "pyocd": "pyocd",
         "sdk_linux-aarch64": "sdk_linux-aarch64",
         "sdk_linux-x86_64": "sdk_linux-x86_64",
         "sdk_macos-aarch64": "sdk_macos-aarch64",
@@ -162,8 +83,7 @@
         "toolchain_macos-aarch64_aarch64-zephyr-elf": "toolchain_macos-aarch64_aarch64-zephyr-elf",
         "toolchain_macos-aarch64_arm-zephyr-eabi": "toolchain_macos-aarch64_arm-zephyr-eabi",
         "toolchain_macos-x86_64_aarch64-zephyr-elf": "toolchain_macos-x86_64_aarch64-zephyr-elf",
-        "toolchain_macos-x86_64_arm-zephyr-eabi": "toolchain_macos-x86_64_arm-zephyr-eabi",
-        "zephyr": "zephyr"
+        "toolchain_macos-x86_64_arm-zephyr-eabi": "toolchain_macos-x86_64_arm-zephyr-eabi"
       }
     },
     "sdk_linux-aarch64": {
@@ -212,28 +132,6 @@
       "original": {
         "type": "file",
         "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/zephyr-sdk-0.16.8_macos-x86_64_minimal.tar.xz"
-      }
-    },
-    "slimlock": {
-      "inputs": {
-        "nixpkgs": [
-          "dream2nix",
-          "purescript-overlay",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1688610262,
-        "narHash": "sha256-Wg0ViDotFWGWqKIQzyYCgayeH8s4U1OZcTiWTQYdAp4=",
-        "owner": "thomashoneyman",
-        "repo": "slimlock",
-        "rev": "b5c6cdcaf636ebbebd0a1f32520929394493f1a6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "thomashoneyman",
-        "repo": "slimlock",
-        "type": "github"
       }
     },
     "systems": {
@@ -360,22 +258,6 @@
       "original": {
         "type": "file",
         "url": "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.8/toolchain_macos-x86_64_arm-zephyr-eabi.tar.xz"
-      }
-    },
-    "zephyr": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1724231024,
-        "narHash": "sha256-T+r6Ek15w77JxDIojPdHHnw1i0LuuYfuEfdNlJmIpoI=",
-        "owner": "zephyrproject-rtos",
-        "repo": "zephyr",
-        "rev": "34206f5505b582942ae4c393d7133a5ea6c849bd",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zephyrproject-rtos",
-        "repo": "zephyr",
-        "type": "github"
       }
     }
   },
