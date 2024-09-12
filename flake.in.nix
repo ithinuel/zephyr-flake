@@ -62,8 +62,7 @@ in
         };
       };
       toolchainsInputs = builtins.foldl' (acc: elem: elem // acc) { } (builtins.map genToolchainInputs toolchains);
-      sdkInputs' = builtins.foldl' (acc: elem: elem // acc) { } (builtins.map genSdkInputs config.host);
-      sdkInputs = builtins.trace sdkInputs' sdkInputs';
+      sdkInputs = builtins.foldl' (acc: elem: elem // acc) { } (builtins.map genSdkInputs config.host);
     in
     sdkInputs //
     toolchainsInputs // {
