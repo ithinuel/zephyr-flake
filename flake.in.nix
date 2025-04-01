@@ -1,6 +1,6 @@
 let
   selected_archs = [ "arm-zephyr-eabi" "aarch64-zephyr-elf" ];
-  version = "0.16.8";
+  version = "0.17.0";
   config = {
     host = [ "linux-x86_64" "linux-aarch64" "macos-x86_64" "macos-aarch64" ];
     toolchain = [
