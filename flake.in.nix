@@ -66,12 +66,14 @@ in
     in
     sdkInputs //
     toolchainsInputs // {
+      flake-utils.url = "github:numtide/flake-utils";
+      git-hooks.url = "github:cachix/git-hooks.nix";
+      git-hooks.inputs.nixpkgs.follows = "nixpkgs";
       nixpkgs.url = "nixpkgs/nixos-24.05";
       nixpkgs_python38.url = "nixpkgs/nixos-23.11";
-      flake-utils.url = "github:numtide/flake-utils";
     };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs_python38, flake-utils, ... }:
+  outputs = inputs@{ nixpkgs, nixpkgs_python38, flake-utils, git-hooks, ... }:
     (flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
@@ -117,6 +119,25 @@ in
       in
       rec {
         formatter = pkgs.nixpkgs-fmt;
+        checks = {
+          pre-commit-check = git-hooks.lib.${system}.run {
+            src = ./.;
+            hooks = {
+              deadnix.enable = true;
+              nixpkgs-fmt.enable = true;
+              statix.enable = true;
+              convco.enable = true;
+              gitlint.enable = true;
+              markdownlint.enable = true;
+              markdownlint.settings.configuration = {
+                MD013 = {
+                  line_length = 100;
+                  code_blocks = false;
+                };
+              };
+            };
+          };
+        };
         packages = rec {
           default = zephyr-sdk;
           zephyr-sdk = pkgs.stdenv.mkDerivation {

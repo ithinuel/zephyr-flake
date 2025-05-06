@@ -5,7 +5,11 @@
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
     flakegen.url = "github:jorsn/flakegen";
-    nixpkgs.url = "nixpkgs/nixos-24.11";
+    git-hooks = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:cachix/git-hooks.nix";
+    };
+    nixpkgs.url = "nixpkgs/nixos-24.05";
     nixpkgs_python38.url = "nixpkgs/nixos-23.11";
     sdk_linux-aarch64 = {
       flake = false;
