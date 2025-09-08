@@ -1,6 +1,6 @@
 let
   selected_archs = [ "arm-zephyr-eabi" "aarch64-zephyr-elf" ];
-  version = "0.17.0";
+  version = "0.17.4";
   config = {
     host = [ "linux-x86_64" "linux-aarch64" "macos-x86_64" "macos-aarch64" ];
     toolchain = [
@@ -76,8 +76,9 @@ in
   outputs = inputs@{ nixpkgs, nixpkgs_python38, flake-utils, git-hooks, ... }:
     (flake-utils.lib.eachDefaultSystem (system:
       let
+        inherit (nixpkgs_python38.legacyPackages.${system}) python38;
+
         pkgs = nixpkgs.legacyPackages.${system};
-        python38 = nixpkgs_python38.legacyPackages.${system}.python38;
         host = nix-system2zephyr.${system};
         arch2toolchain = arch: "toolchain_${arch}";
         genToolchainPackages = arch: {
