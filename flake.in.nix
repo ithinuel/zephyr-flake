@@ -50,7 +50,7 @@ in
       flake-utils.url = "github:numtide/flake-utils";
       git-hooks.url = "github:cachix/git-hooks.nix";
       git-hooks.inputs.nixpkgs.follows = "nixpkgs";
-      nixpkgs.url = "nixpkgs/nixos-24.05";
+      nixpkgs.url = "nixpkgs/nixos-25.05";
       nixpkgs_python38.url = "nixpkgs/nixos-23.11";
     };
 
