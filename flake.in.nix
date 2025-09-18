@@ -2,37 +2,18 @@ let
   selected_archs = [ "arm-zephyr-eabi" "aarch64-zephyr-elf" ];
   version = "0.17.4";
   config = {
-    host = [ "linux-x86_64" "linux-aarch64" "macos-x86_64" "macos-aarch64" ];
+    host = [
+      "linux-aarch64"
+      "macos-aarch64"
+    ];
     toolchain = [
       "aarch64-zephyr-elf"
-      #"arc-zephyr-elf"
-      #"arc64-zephyr-elf"
       "arm-zephyr-eabi"
-      #"microblazeel-zephyr-elf"
-      #"mips-zephyr-elf"
-      #"nios2-zephyr-elf"
-      #"riscv64-zephyr-elf"
-      #"sparc-zephyr-elf"
       #"x86_64-zephyr-elf"
-      #"xtensa-dc233c_zephyr-elf"
-      #"xtensa-espressif_esp32_zephyr-elf"
-      #"xtensa-espressif_esp32s2_zephyr-elf"
-      #"xtensa-espressif_esp32s3_zephyr-elf"
-      #"xtensa-intel_ace15_mtpm_zephyr-elf"
-      #"xtensa-intel_tgl_adsp_zephyr-elf"
-      #"xtensa-mtk_mt8195_adsp_zephyr-elf"
-      #"xtensa-nxp_imx_adsp_zephyr-elf"
-      #"xtensa-nxp_imx8m_adsp_zephyr-elf"
-      #"xtensa-nxp_imx8ulp_adsp_zephyr-elf"
-      #"xtensa-nxp_rt500_adsp_zephyr-elf"
-      #"xtensa-nxp_rt600_adsp_zephyr-elf"
-      #"xtensa-sample_controller_zephyr-elf"
     ];
   };
   nix-system2zephyr = {
-    x86_64-linux = "linux-x86_64";
     aarch64-linux = "linux-aarch64";
-    x86_64-darwin = "macos-aarch64";
     aarch64-darwin = "macos-aarch64";
   };
   cartesianProductOfSets =
