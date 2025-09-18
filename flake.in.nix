@@ -146,10 +146,10 @@ in
           buildInputs = with pkgs; [ cmake ninja gperf dtc qemu thrift python312 python312Packages.autopep8 ] ++
             (builtins.map (arch: packages.${arch2toolchain arch}) selected_archs) ++
             [ packages.zephyr-sdk ];
-          shellHook = ''
-            export ZEPHYR_SDK_INSTALL_DIR=${packages.zephyr-sdk}
-            export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
-          '';
+          env = {
+            ZEPHYR_SDK_INSTALL_DIR = "${packages.zephyr-sdk}";
+            ZEPHYR_TOOLCHAIN_VARIANT = "zephyr";
+          };
         };
       }
     ));
