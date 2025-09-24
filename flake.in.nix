@@ -52,9 +52,17 @@ in
       git-hooks.inputs.nixpkgs.follows = "nixpkgs";
       nixpkgs.url = "nixpkgs/nixos-25.05";
       nixpkgs_python38.url = "nixpkgs/nixos-23.11";
+      pyproject-nix = {
+        url = "github:pyproject-nix/pyproject.nix";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+      zephyr = {
+        url = "github:zephyrproject-rtos/zephyr";
+        flake = false;
+      };
     };
 
-  outputs = inputs@{ nixpkgs, nixpkgs_python38, flake-utils, git-hooks, ... }:
+  outputs = inputs@{ nixpkgs, nixpkgs_python38, flake-utils, git-hooks, pyproject-nix, zephyr, ... }:
     (flake-utils.lib.eachDefaultSystem (system:
       let
         inherit (nixpkgs_python38.legacyPackages.${system}) python38;
@@ -98,6 +106,62 @@ in
 
           };
         };
+        # add a few packages not already present in nixpkgs.
+        python = pkgs.python3.override {
+          packageOverrides = final: prev: {
+            gitlint-core = final.buildPythonPackage rec {
+              pname = "gitlint_core";
+              version = "0.19.1";
+              format = "pyproject";
+              src = pkgs.fetchPypi {
+                inherit pname version;
+                sha256 = "sha256-e/l3sD/1gWJKngP2XruFAswS36o+ktI+iytUu9qimZI=";
+              };
+              build-system = [
+                final.hatchling
+                final.hatch-vcs
+              ];
+              dependencies = with final; [ arrow click sh ];
+
+              doCheck = false;
+            };
+            sphinx-lint = final.buildPythonPackage rec {
+              pname = "sphinx_lint";
+              version = "1.0.0";
+              format = "pyproject";
+              src = pkgs.fetchPypi {
+                inherit pname version;
+                sha256 = "sha256-bq/bRBcs5Sb0Bb82xxPrJG8TQOwtZn5ymOJIftdt7NI=";
+              };
+              doCheck = false;
+              build-system = [ final.hatchling final.hatch-vcs ];
+              dependencies = [ final.polib final.regex ];
+            };
+            vermin = final.buildPythonPackage rec {
+              pname = "vermin";
+              version = "1.6.0";
+              src = pkgs.fetchPypi {
+                inherit pname version;
+                sha256 = "sha256-YmbKAvVdHCqhiaYQAXwTLrLRk08J5yqVWx6zgg7m1O8=";
+              };
+              doCheck = false;
+            };
+          };
+        };
+        project' = pyproject-nix.lib.project.loadRequirementsTxt {
+          requirements = "${zephyr}/scripts/requirements.txt";
+        };
+        project =
+          let
+            excludedPackages = [ "clang-format" "gcovr" "spsdk" ];
+            filterOutDeps = builtins.filter (x: !builtins.elem x.name excludedPackages);
+          in
+          project' // {
+            dependencies = project'.dependencies // {
+              dependencies = filterOutDeps project'.dependencies.dependencies;
+            };
+          };
+        env = python.withPackages (pyproject-nix.lib.renderers.withPackages { inherit python project; });
       in
       rec {
         formatter = pkgs.nixpkgs-fmt;
@@ -145,7 +209,7 @@ in
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [ cmake ninja gperf dtc qemu thrift python312 python312Packages.autopep8 ] ++
             (builtins.map (arch: packages.${arch2toolchain arch}) selected_archs) ++
-            [ packages.zephyr-sdk ];
+            [ packages.zephyr-sdk env ];
           env = {
             ZEPHYR_SDK_INSTALL_DIR = "${packages.zephyr-sdk}";
             ZEPHYR_TOOLCHAIN_VARIANT = "zephyr";

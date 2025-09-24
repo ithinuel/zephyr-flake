@@ -9,23 +9,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:cachix/git-hooks.nix";
     };
-    nixpkgs.url = "nixpkgs/nixos-24.05";
+    nixpkgs.url = "nixpkgs/nixos-25.05";
     nixpkgs_python38.url = "nixpkgs/nixos-23.11";
+    pyproject-nix = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:pyproject-nix/pyproject.nix";
+    };
     sdk_linux-aarch64 = {
       flake = false;
       url = "file+https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.4/zephyr-sdk-0.17.4_linux-aarch64_minimal.tar.xz";
     };
-    sdk_linux-x86_64 = {
-      flake = false;
-      url = "file+https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.4/zephyr-sdk-0.17.4_linux-x86_64_minimal.tar.xz";
-    };
     sdk_macos-aarch64 = {
       flake = false;
       url = "file+https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.4/zephyr-sdk-0.17.4_macos-aarch64_minimal.tar.xz";
-    };
-    sdk_macos-x86_64 = {
-      flake = false;
-      url = "file+https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.4/zephyr-sdk-0.17.4_macos-x86_64_minimal.tar.xz";
     };
     toolchain_linux-aarch64_aarch64-zephyr-elf = {
       flake = false;
@@ -35,14 +31,6 @@
       flake = false;
       url = "file+https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.4/toolchain_linux-aarch64_arm-zephyr-eabi.tar.xz";
     };
-    toolchain_linux-x86_64_aarch64-zephyr-elf = {
-      flake = false;
-      url = "file+https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.4/toolchain_linux-x86_64_aarch64-zephyr-elf.tar.xz";
-    };
-    toolchain_linux-x86_64_arm-zephyr-eabi = {
-      flake = false;
-      url = "file+https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.4/toolchain_linux-x86_64_arm-zephyr-eabi.tar.xz";
-    };
     toolchain_macos-aarch64_aarch64-zephyr-elf = {
       flake = false;
       url = "file+https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.4/toolchain_macos-aarch64_aarch64-zephyr-elf.tar.xz";
@@ -51,13 +39,9 @@
       flake = false;
       url = "file+https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.4/toolchain_macos-aarch64_arm-zephyr-eabi.tar.xz";
     };
-    toolchain_macos-x86_64_aarch64-zephyr-elf = {
+    zephyr = {
       flake = false;
-      url = "file+https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.4/toolchain_macos-x86_64_aarch64-zephyr-elf.tar.xz";
-    };
-    toolchain_macos-x86_64_arm-zephyr-eabi = {
-      flake = false;
-      url = "file+https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.17.4/toolchain_macos-x86_64_arm-zephyr-eabi.tar.xz";
+      url = "github:zephyrproject-rtos/zephyr";
     };
   };
   outputs = inputs: inputs.flakegen ./flake.in.nix inputs;
