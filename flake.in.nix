@@ -5,6 +5,7 @@ let
     host = [
       "linux-aarch64"
       "macos-aarch64"
+      "linux-x86_64"
     ];
     toolchain = [
       "aarch64-zephyr-elf"
@@ -15,6 +16,7 @@ let
   nix-system2zephyr = {
     aarch64-linux = "linux-aarch64";
     aarch64-darwin = "macos-aarch64";
+    x86_64-linux = "linux-x86_64";
   };
   cartesianProductOfSets =
     attrsOfLists:
