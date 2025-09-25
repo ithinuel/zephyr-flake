@@ -146,6 +146,25 @@ in
               };
               doCheck = false;
             };
+            # used by docs
+            sphinx-last-updated-by-git = final.buildPythonPackage rec {
+              pname = "sphinx_last_updated_by_git";
+              version = "0.3.8";
+              src = pkgs.fetchPypi {
+                inherit pname version;
+                sha256 = "sha256-wUUBH0YJ2EGAW2mpMACZ/AL+2PW7nlvO932Xrql7d2E=";
+              };
+              doCheck = false;
+            };
+            coverxygen = final.buildPythonPackage rec {
+              pname = "coverxygen";
+              version = "1.8.1";
+              src = pkgs.fetchPypi {
+                inherit pname version;
+                sha256 = "sha256-0cL2Vp6N+II64xOx94duiP8gtDcsbQLwTFH7XcQkV28=";
+              };
+              doCheck = false;
+            };
           };
         };
         project' = pyproject-nix.lib.project.loadRequirementsTxt {
@@ -162,6 +181,11 @@ in
             };
           };
         env = python.withPackages (pyproject-nix.lib.renderers.withPackages { inherit python project; });
+
+        doc_project = pyproject-nix.lib.project.loadRequirementsTxt {
+          requirements = "${zephyr}/doc/requirements.txt";
+        };
+        doc_env = python.withPackages (doc_project.renderers.withPackages { inherit python; });
       in
       rec {
         formatter = pkgs.nixpkgs-fmt;
@@ -214,6 +238,9 @@ in
             ZEPHYR_SDK_INSTALL_DIR = "${packages.zephyr-sdk}";
             ZEPHYR_TOOLCHAIN_VARIANT = "zephyr";
           };
+        };
+        devShells.doc = pkgs.mkShell {
+          buildInputs = with pkgs; [ doxygen texliveFull graphviz imagemagick doc_env ];
         };
       }
     ));
